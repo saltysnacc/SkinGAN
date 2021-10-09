@@ -18,3 +18,6 @@ The following packages are required to use SkinGAN:
 
 ## Usage
 Please refer to the jupyter notebook for a basic usage example
+
+## Dataset credit
+The models used in this project were trained using a Dataset created by Shachar Avuka, which can be found here: https://pastebin.com/e13sdQ8y
