@@ -5,7 +5,7 @@ import torch.utils.data
 import torchvision.utils as vutils
 import torchvision.transforms as transforms
 from PIL import Image
-
+from PIL import ImageDraw
 
 # Generator Code
 
@@ -122,9 +122,112 @@ class Skin_generator:
     #generate new skin and render it
     def generate_skin(self):
         noise = torch.randn(1, self.nz, 1, 1, device=self.device)
-        print("test")
         fake = vutils.make_grid(self.netG(noise).detach().cpu(), padding=2, normalize=True)
         tran1 = transforms.ToPILImage()
-        pil_image_single = tran1(fake)
+        pil_image_single = self.make_transparent(tran1(fake))
         img = self.render_skin(pil_image_single)
         return img, pil_image_single
+
+    def make_transparent(self,skin):
+        background = Image.new("RGBA", (64, 64), (255, 0, 0, 0))
+
+        # front
+        head = skin.crop((8, 8, 16, 16))
+        background.paste(head, (8, 8, 16, 16))
+
+        left_arm = skin.crop((36, 52, 40, 64))
+        background.paste(left_arm, (36, 52, 40, 64))
+
+        right_arm = skin.crop((44, 20, 48, 32))
+        background.paste(right_arm, (44, 20, 48, 32))
+
+        torso = skin.crop((20, 20, 28, 32))
+        background.paste(torso, (20, 20, 28, 32))
+
+        right_leg = skin.crop((4, 20, 8, 32))
+        background.paste(right_leg, (4, 20, 8, 32))
+
+        left_leg = skin.crop((20, 52, 24, 64))
+        background.paste(left_leg, (20, 52, 24, 64))
+
+        # back
+        head = skin.crop((24, 8, 32, 16))
+        background.paste(head, (24, 8, 32, 16))
+
+        left_arm = skin.crop((44, 52, 48, 64))
+        background.paste(left_arm, (44, 52, 48, 64))
+
+        right_arm = skin.crop((52, 20, 56, 32))
+        background.paste(right_arm, (52, 20, 56, 32))
+
+        torso = skin.crop((32, 20, 40, 32))
+        background.paste(torso, (32, 20, 40, 32))
+
+        right_leg = skin.crop((12, 20, 16, 32))
+        background.paste(right_leg, (12, 20, 16, 32))
+
+        left_leg = skin.crop((28, 52, 32, 64))
+        background.paste(left_leg, (28, 52, 32, 64))
+
+        # left
+
+        head = skin.crop((16, 8, 24, 16))
+        background.paste(head, (16, 8, 24, 16))
+
+        left_arm = skin.crop((40, 52, 44, 64))
+        background.paste(left_arm, (40, 52, 44, 64))
+
+        left_leg = skin.crop((24, 52, 28, 64))
+        background.paste(left_leg, (24, 52, 28, 64))
+
+        # right
+
+        head = skin.crop((0, 8, 8, 16))
+        background.paste(head, (0, 8, 8, 16))
+
+        right_arm = skin.crop((40, 20, 44, 32))
+        background.paste(right_arm, (40, 20, 44, 32))
+
+        left_leg = skin.crop((0, 20, 4, 32))
+        background.paste(left_leg, (0, 20, 4, 32))
+
+        #tops and bottoms
+
+        head_top = skin.crop((8, 0, 16, 8))
+        background.paste(head_top, (8, 0, 16, 8))
+
+        head_bottom = skin.crop((16, 0, 24, 8))
+        background.paste(head_bottom, (16, 0, 24, 8))
+
+        right_leg_top = skin.crop((4, 16, 8, 20))
+        background.paste(right_leg_top, (4, 16, 8, 20))
+
+        right_leg_bottom = skin.crop((8, 16, 12, 20))
+        background.paste(right_leg_bottom, (8, 16, 12, 20))
+
+        left_leg_bottom = skin.crop((24, 48, 28, 52))
+        background.paste(left_leg_bottom,(24, 48, 28, 52))
+
+        left_leg_top = skin.crop((20, 48, 24, 52) 	)
+        background.paste(left_leg_top,(20, 48, 24, 52))
+
+        torso_top = skin.crop((20, 16, 28, 20) )
+        background.paste(torso_top ,(20, 16, 28, 20))
+
+        torso_bottom = skin.crop((28, 16, 36, 20))
+        background.paste(torso_bottom, (28, 16, 36, 20))
+
+        left_arm_top = skin.crop((36, 48, 40, 52))
+        background.paste(left_arm_top, (36, 48, 40, 52))
+
+        left_arm_bottom = skin.crop((40, 48, 44, 52))
+        background.paste(left_arm_bottom, (40, 48, 44, 52))
+
+        right_arm_top = skin.crop((44, 16, 48, 20))
+        background.paste(right_arm_top, (44, 16, 48, 20))
+
+        right_arm_bottom = skin.crop((48, 16, 52, 20))
+        background.paste(right_arm_bottom, (48, 16, 52, 20))
+
+        return background
+
