@@ -1,5 +1,5 @@
 flask
 waitress
-torch==1.9.1+cpu
+torch==1.9.0+cpu
 torchvision
 pillow
