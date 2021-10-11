@@ -53,7 +53,7 @@ class Skin_generator:
 
     # render skin from raw skin image
     def render_skin(self, skin):
-        background = Image.new("RGB", (68, 36), (200, 200, 200))
+        background = Image.new("RGBA", (68, 36), (255, 0, 0, 0))
 
         # front
         head = skin.crop((8, 8, 16, 16))
