@@ -17,3 +17,6 @@ Please refer to the jupyter notebook for a basic usage example
 The models used in this project were trained using a Dataset created by Shachar Avuka, which can be found here: https://pastebin.com/e13sdQ8y
 
 Feel free to use any skins created using this project however you like.
+
+## Website credit
+Thank you to https://github.com/enjeck/ for allowing me to adapt his code to my project.
