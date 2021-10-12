@@ -4,3 +4,4 @@ waitress
 torch==1.9.0+cpu
 torchvision
 pillow
+gunicorn
