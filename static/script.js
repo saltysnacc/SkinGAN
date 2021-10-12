@@ -72,6 +72,6 @@ function download(){
     var url = document.getElementById("raw").src;
     var a = document.getElementById("download-text");
     a.href = url;
-    a.download = `test.png`; 
+    a.download = `skin.png`; 
     a.click() 
 }
