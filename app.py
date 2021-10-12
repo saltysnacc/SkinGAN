@@ -6,7 +6,9 @@ from skinGAN import Skin_generator
 
 from io import BytesIO
 from waitress import serve
+import os
 
+port = int(os.environ.get('PORT', 5000))
 app = Flask(__name__,static_url_path='')
 Gen = Skin_generator("models/Minecraft_skins_G9.pt")
 
@@ -37,4 +39,4 @@ def downloadSkin():
     return send_file(img_io, mimetype='image/png')
 
 # run app
-serve(app, host="0.0.0.0", port=8080)
+serve(app, host="0.0.0.0", port=port)
